@@ -88,12 +88,7 @@ const gradeClass = (g) => {
     return "text-red-400"
 }
 
-// const gradeBgClass = (g) => {
-//     if (g === "A" || g === "B") return "from-emerald-500/10 to-emerald-500/5"
-//     if (g === "C") return "from-lime-500/10 to-lime-500/5"
-//     if (g === "D") return "from-amber-500/10 to-amber-500/5"
-//     return "from-red-500/10 to-red-500/5"
-// }
+
 
 export default function TrustCardCarousel() {
     const [i, setI] = useState(0)
@@ -110,10 +105,10 @@ export default function TrustCardCarousel() {
     const c = cards[i]
 
     const cardSizes = [
-        { width: 320, minHeight: 440 }, // Card 0 (D)
-        { width: 320, minHeight: 330 }, // Card 1 (A)
-        { width: 320, minHeight: 330 }, // Card 2 (C)
-        { width: 320, minHeight: 440 }, // Card 3 (F)
+        { width: 320, minHeight: 440 },
+        { width: 320, minHeight: 330 },
+        { width: 320, minHeight: 330 },
+        { width: 320, minHeight: 440 },
     ]
 
 

@@ -3,6 +3,14 @@ import { motion } from "framer-motion"
 export default function ChromeCTA() {
     return (
         <section className="relative py-36 overflow-hidden bg-white">
+
+            {/* Invisible SEO helper */}
+            <p className="sr-only">
+                Install TrustRadar, a free Chrome extension that analyzes Amazon reviews,
+                detects fake and manipulated reviews, and provides instant buy recommendations
+                directly on Amazon product pages.
+            </p>
+
             {/* Vibrant ambient glow */}
             <div
                 className="absolute inset-0 opacity-20"
@@ -51,8 +59,8 @@ export default function ChromeCTA() {
                     transition={{ delay: 0.2, duration: 0.6 }}
                     className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto"
                 >
-                    Get instant insight into review quality, sentiment balance,
-                    and risk signals — directly on Amazon product pages.
+                    Analyze Amazon reviews instantly with AI-powered trust scores,
+                    sentiment balance, and fake review detection, directly on product pages.
                 </motion.p>
 
                 {/* TRUST POINTS */}
@@ -65,15 +73,15 @@ export default function ChromeCTA() {
                 >
                     <div className="flex items-center gap-2">
                         <span>⚡</span>
-                        Runs locally
+                        Runs locally in your browser
                     </div>
                     <div className="flex items-center gap-2">
                         <span>🔒</span>
-                        No data sent
+                        No data sent to servers
                     </div>
                     <div className="flex items-center gap-2">
                         <span>⭐</span>
-                        Free to install
+                        Free Chrome extension
                     </div>
                 </motion.div>
 
@@ -93,7 +101,7 @@ export default function ChromeCTA() {
                         style={{ background: 'linear-gradient(135deg, #F265FF, #9C61FF)' }}
                     >
                         <span>➕</span>
-                        Add to Chrome — It's Free
+                        Add TrustRadar to Chrome — Free
                     </a>
 
                     <div className="mt-4 text-xs text-gray-500">

@@ -6,9 +6,9 @@ import {
 import { useEffect, useState } from "react"
 
 const links = [
-    { label: "How", href: "#how" },
+    // { label: "How", href: "#how" },
     { label: "Features", href: "#features" },
-    { label: "Privacy", href: "#privacy" },
+    // { label: "Privacy", href: "#privacy" },
 ]
 
 export default function FloatingNavbar() {
@@ -91,6 +91,15 @@ export default function FloatingNavbar() {
 
                         Add to Chrome
                     </button>
+                    <a
+                        href="https://chromewebstore.google.com/detail/hgnlhnjkenedenmhngkfdnfclmmocock?utm_source=landing"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="ml-2 px-4 py-1.5 rounded-full text-sm font-semibold text-gray-700 hover:scale-[1.05] transition shadow-lg border border-gray-200 bg-blue-100"
+                    > Rate us</a>
+
+
+
                 </nav>
             </motion.div>
 

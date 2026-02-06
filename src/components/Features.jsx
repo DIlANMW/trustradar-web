@@ -3,65 +3,65 @@ import { motion } from "framer-motion"
 const features = [
     {
         title: "AI Trust Score",
-        desc: "A single, easy-to-understand grade generated from multiple independent signals.",
+        desc: "A single trust score that summarizes Amazon review authenticity using multiple independent signals.",
         points: [
-            "Review authenticity patterns",
+            "Amazon review authenticity patterns",
             "Verified purchase weighting",
-            "Rating distribution balance",
+            "Balanced rating distribution analysis",
         ],
         icon: "🧠",
         color: "#84DDFF",
     },
     {
         title: "Fake Review Detection",
-        desc: "Detects manipulation signals that normal star ratings can't reveal.",
+        desc: "Identifies fake and manipulated Amazon reviews that star ratings alone can't reveal.",
         points: [
-            "Suspicious review timing",
-            "Over-concentrated 5★ clusters",
-            "Repetitive phrasing patterns",
+            "Suspicious review timing patterns",
+            "Over-concentrated 5★ rating clusters",
+            "Repetitive and synthetic phrasing signals",
         ],
         icon: "🚫",
         color: "#EF4444",
     },
     {
-        title: "Sentiment Balance",
+        title: "Sentiment Balance Analysis",
         desc: "Understands what customers actually say — not just how many stars they give.",
         points: [
-            "Positive / neutral / negative split",
-            "Emotion & intent signals",
-            "Weighted by review quality",
+            "Positive, neutral, and negative sentiment split",
+            "Emotion and purchase-intent signals",
+            "Weighted by review credibility",
         ],
         icon: "📊",
         color: "#9C61FF",
     },
     {
-        title: "Smart Recommendation",
-        desc: "A clear decision based on overall risk — not hype.",
+        title: "Smart Buy Recommendation",
+        desc: "A clear buying decision based on overall review risk — not hype or popularity.",
         points: [
             "BUY / CONSIDER / NOT RECOMMENDED",
-            "Transparent buy index",
-            "Warnings when confidence is low",
+            "Transparent buy-confidence index",
+            "Warnings when review confidence is low",
         ],
         icon: "✅",
         color: "#F59E0B",
     },
     {
-        title: "Runs Locally",
-        desc: "All analysis happens in your browser.",
+        title: "Runs 100% Locally",
+        desc: "All Amazon review analysis runs directly in your browser for maximum privacy.",
         points: [
-            "No accounts required",
-            "No data sent to servers",
+            "No accounts or sign-ups required",
+            "No review data sent to servers",
             "Instant results on page load",
         ],
         icon: "🔒",
         color: "#6B7280",
     },
     {
-        title: "Stays Out of the Way",
-        desc: "Designed to assist — never interrupt.",
+        title: "Distraction-Free Design",
+        desc: "Built to assist your buying decision — never interrupt your browsing.",
         points: [
-            "Lightweight popup UI",
-            "Doesn't block the page",
+            "Lightweight Chrome extension popup",
+            "Never blocks Amazon product pages",
             "Appears only when useful",
         ],
         icon: "🧩",
@@ -75,10 +75,15 @@ export default function Features() {
             id="features"
             className="relative py-32 bg-white overflow-hidden"
         >
-            {/* ── HERO-LIKE ANIMATED BACKGROUND ── */}
-            <div className="pointer-events-none absolute inset-0 overflow-hidden">
 
-                {/* base pastel wash */}
+            {/* Invisible SEO helper */}
+            <p className="sr-only">
+                TrustRadar features include fake Amazon review detection, AI trust scoring,
+                sentiment analysis, and smart buy recommendations delivered through a free Chrome extension.
+            </p>
+
+            {/* ── ANIMATED BACKGROUND ── */}
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <motion.div
                     className="absolute inset-0"
                     animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
@@ -90,7 +95,6 @@ export default function Features() {
                     }}
                 />
 
-                {/* violet glow */}
                 <motion.div
                     className="absolute rounded-full"
                     animate={{ x: [0, 80, 0], y: [0, -60, 0] }}
@@ -106,7 +110,6 @@ export default function Features() {
                     }}
                 />
 
-                {/* blue glow */}
                 <motion.div
                     className="absolute rounded-full"
                     animate={{ x: [0, -70, 0], y: [0, 80, 0] }}
@@ -122,7 +125,6 @@ export default function Features() {
                     }}
                 />
 
-                {/* pink accent */}
                 <motion.div
                     className="absolute rounded-full"
                     animate={{ x: [0, 60, 0], y: [0, -70, 0] }}
@@ -138,7 +140,6 @@ export default function Features() {
                     }}
                 />
 
-                {/* micro texture */}
                 <div className="absolute inset-0 opacity-[0.035] bg-[radial-gradient(circle_at_1px_1px,#000_1px,transparent_0)] bg-[size:24px_24px]" />
             </div>
 
@@ -153,11 +154,11 @@ export default function Features() {
                     className="max-w-2xl"
                 >
                     <h2 className="font-sora text-4xl md:text-5xl font-bold tracking-tight text-gray-900">
-                        Designed for confident decisions
+                        Everything you need to trust Amazon reviews
                     </h2>
                     <p className="mt-5 text-lg text-gray-600">
-                        TrustRadar doesn't guess. It analyzes patterns, verifies signals,
-                        and gives you a clear recommendation in seconds.
+                        TrustRadar analyzes Amazon review patterns, detects fake reviews,
+                        and delivers a clear buying recommendation in seconds.
                     </p>
                 </motion.div>
 
@@ -174,7 +175,6 @@ export default function Features() {
                             className="relative group rounded-2xl bg-white/80 border backdrop-blur-xl p-6 shadow-lg hover:shadow-2xl transition-all"
                             style={{ borderColor: `${f.color}40` }}
                         >
-                            {/* hover gradient */}
                             <div
                                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition"
                                 style={{

@@ -180,7 +180,7 @@ export default function Hero() {
 
           <p className="mt-6 text-lg text-gray-500 max-w-xl leading-relaxed">
             TrustRadar is a free Chrome extension that analyzes Amazon reviews in real time,
-            detecting fake reviews, manipulation signals, and sentiment imbalance — so you can buy with confidence.
+            detecting fake reviews, manipulation signals, and sentiment imbalance, so you can buy with confidence.
           </p>
 
           <div className="mt-12 flex gap-4">
