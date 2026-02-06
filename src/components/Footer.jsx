@@ -92,7 +92,7 @@ export default function Footer() {
                         </p>
 
                         <a
-                            href="https://chrome.google.com/webstore"
+                            href="https://chromewebstore.google.com/detail/hgnlhnjkenedenmhngkfdnfclmmocock?utm_source=landing"
                             target="_blank"
                             rel="noreferrer"
                             className="inline-flex items-center justify-center px-5 py-2.5 rounded-full text-white text-sm font-semibold hover:scale-[1.04] hover:shadow-lg transition shadow-md"

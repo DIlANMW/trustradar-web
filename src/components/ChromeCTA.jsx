@@ -86,7 +86,7 @@ export default function ChromeCTA() {
                     className="mt-14"
                 >
                     <a
-                        href="https://chrome.google.com/webstore"
+                        href="https://chromewebstore.google.com/detail/hgnlhnjkenedenmhngkfdnfclmmocock?utm_source=landing"
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-semibold text-base hover:scale-[1.04] hover:shadow-2xl transition shadow-xl"
