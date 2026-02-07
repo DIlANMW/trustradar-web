@@ -1,19 +1,16 @@
-import { motion, useMotionValue, useSpring } from "framer-motion"
-import { useEffect } from "react"
+import { motion, useMotionValue, useSpring, useAnimation } from "framer-motion"
+import { useEffect, useState } from "react"
 
-/* ── floating helper ── */
 const float = (distance = 6, duration = 16) => ({
   animate: { y: [0, -distance, 0] },
   transition: { duration, repeat: Infinity, ease: "easeInOut" },
 })
 
-/* ── subtle parallax (desktop only) ── */
 function useTinyParallax(max = 4) {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const springX = useSpring(x, { stiffness: 50, damping: 25 })
   const springY = useSpring(y, { stiffness: 50, damping: 25 })
-
   useEffect(() => {
     if (window.innerWidth < 1024) return
     const onMove = (e) => {
@@ -23,11 +20,9 @@ function useTinyParallax(max = 4) {
     window.addEventListener("mousemove", onMove)
     return () => window.removeEventListener("mousemove", onMove)
   }, [max, x, y])
-
   return { x: springX, y: springY }
 }
 
-/* ── cards ── */
 const CARDS = [
   { src: "/cards/card-f-1.png", w: 280, x: "44%", y: "12%", z: 30, float: [7, 17], delay: 0, glow: true },
   { src: "/cards/card-d-1.png", w: 200, x: "72%", y: "4%", z: 20, float: [4, 21], delay: 0.12 },
@@ -62,7 +57,6 @@ function FloatingCard({ card, parallax }) {
           }}
         />
       )}
-
       <motion.img
         src={card.src}
         alt=""
@@ -75,18 +69,123 @@ function FloatingCard({ card, parallax }) {
   )
 }
 
-export default function Hero() {
-  const parallax = useTinyParallax(4)
+function MobileCardStack() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const x = useMotionValue(0)
+  const controls = useAnimation()
+
+  const handleDragEnd = (event, info) => {
+    const threshold = 100
+
+    if (info.offset.x > threshold && currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1)
+    } else if (info.offset.x < -threshold && currentIndex < CARDS.length - 1) {
+      setCurrentIndex(currentIndex + 1)
+    }
+
+    controls.start({ x: 0 })
+  }
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-white">
+    <div className="relative w-full h-[480px] flex items-center justify-center">
+      <div className="relative w-[300px] h-[420px]">
+        {CARDS.map((card, index) => {
+          const offset = index - currentIndex
+          const isVisible = Math.abs(offset) <= 2
 
+          if (!isVisible) return null
+
+          return (
+            <motion.div
+              key={index}
+              drag={offset === 0 ? "x" : false}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.7}
+              onDragEnd={offset === 0 ? handleDragEnd : undefined}
+              animate={controls}
+              style={{
+                x: offset === 0 ? x : 0,
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                zIndex: CARDS.length - Math.abs(offset),
+              }}
+              initial={false}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+              }}
+            >
+              <motion.div
+                animate={{
+                  scale: 1 - Math.abs(offset) * 0.08,
+                  y: Math.abs(offset) * 12,
+                  x: "-50%",
+                  translateY: "-50%",
+                  opacity: 1 - Math.abs(offset) * 0.3,
+                  rotate: offset * 2,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30,
+                }}
+              >
+                {card.glow && offset === 0 && (
+                  <div
+                    className="absolute rounded-2xl blur-2xl opacity-40"
+                    style={{
+                      inset: -16,
+                      background: "linear-gradient(135deg,#342a3e,#29144d,#7b63f1)",
+                    }}
+                  />
+                )}
+                <motion.img
+                  src={card.src}
+                  alt=""
+                  draggable={false}
+                  style={{ width: Math.round(card.w * 1.08) }}
+                  className="relative rounded-2xl shadow-2xl"
+                  animate={offset === 0 ? { y: [0, -6, 0] } : {}}
+                  transition={
+                    offset === 0
+                      ? { duration: 16, repeat: Infinity, ease: "easeInOut" }
+                      : {}
+                  }
+                />
+              </motion.div>
+            </motion.div>
+          )
+        })}
+      </div>
+
+      {/* Swipe indicator dots */}
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2">
+        {CARDS.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-2 h-2 rounded-full transition-all ${index === currentIndex
+              ? "bg-purple-600 w-6"
+              : "bg-gray-300"
+              }`}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default function Hero() {
+  const parallax = useTinyParallax(4)
+  return (
+    <section className="relative min-h-screen overflow-hidden bg-white">
       {/* Invisible SEO helper */}
       <p className="sr-only">
         TrustRadar is a free Amazon review analyzer Chrome extension that detects fake,
         manipulated, and biased reviews in real time before you buy products online.
       </p>
-
       {/* ── ANIMATED BACKGROUND ── */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <motion.div
@@ -98,7 +197,6 @@ export default function Hero() {
             backgroundSize: "200% 200%",
           }}
         />
-
         <motion.div
           className="absolute rounded-full"
           animate={{ x: [0, 80, 0], y: [0, -60, 0] }}
@@ -113,7 +211,6 @@ export default function Hero() {
             filter: "blur(190px)",
           }}
         />
-
         <motion.div
           className="absolute rounded-full"
           animate={{ x: [0, -90, 0], y: [0, 70, 0] }}
@@ -128,7 +225,6 @@ export default function Hero() {
             filter: "blur(200px)",
           }}
         />
-
         <motion.div
           className="absolute rounded-full"
           animate={{ x: [0, 60, 0], y: [0, -80, 0] }}
@@ -143,12 +239,9 @@ export default function Hero() {
             filter: "blur(210px)",
           }}
         />
-
         <div className="absolute inset-0 opacity-[0.035] bg-[radial-gradient(circle_at_1px_1px,#000_1px,transparent_0)] bg-[size:24px_24px]" />
       </div>
-
-      <div className="relative max-w-7xl mx-auto px-6 pt-36 pb-32 grid lg:grid-cols-2 items-center">
-
+      <div className="relative max-w-7xl mx-auto px-6 pt-36 pb-32 lg:grid lg:grid-cols-2 lg:items-center">
         {/* LEFT */}
         <motion.div
           initial={{ opacity: 0, y: 28 }}
@@ -160,9 +253,10 @@ export default function Hero() {
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
             Live on Amazon product pages
           </div>
-
-          <h1 className="text-5xl md:text-6xl font-extrabold leading-[1.02] tracking-[-0.02em] text-gray-950">
-            Detect fake Amazon reviews.
+          <h1 className="text-5xl md:text-6xl font-extrabold leading-[1.02] tracking-[-0.02em]">
+            <span className="bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 bg-clip-text text-transparent">
+              Detect fake Amazon reviews.
+            </span>
             <br />
             <span className="relative inline-block">
               <motion.span
@@ -174,15 +268,28 @@ export default function Hero() {
                     "linear-gradient(90deg,#d946ef,#8b5cf6,#6366f1)",
                 }}
               />
-              <span className="relative">Decide instantly.</span>
+              <motion.span
+                className="relative bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent"
+                animate={{
+                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                style={{
+                  backgroundSize: "200% 200%",
+                }}
+              >
+                Decide instantly.
+              </motion.span>
             </span>
           </h1>
-
           <p className="mt-6 text-lg text-gray-500 max-w-xl leading-relaxed">
             TrustRadar is a free Chrome extension that analyzes Amazon reviews in real time,
             detecting fake reviews, manipulation signals, and sentiment imbalance, so you can buy with confidence.
           </p>
-
           <div className="mt-12 flex gap-4">
             <motion.button
               whileHover={{ scale: 1.04 }}
@@ -202,7 +309,6 @@ export default function Hero() {
                     "linear-gradient(135deg, rgba(167, 139, 250, 0.78), rgba(147,197,253,0.6))",
                 }}
               />
-
               <span
                 className="absolute inset-0 rounded-full ring-1 ring-black/10"
                 style={{
@@ -210,9 +316,7 @@ export default function Hero() {
                     "linear-gradient(135deg, #c026d3 0%, #7c3aed 50%, #2563eb 100%)",
                 }}
               />
-
               <span className="absolute inset-0 rounded-full ring-1 ring-indigo-300/30" />
-
               <span className="relative z-10 flex items-center gap-3 text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.35)]">
                 <img
                   src="/Chrome-Logo.png"
@@ -225,19 +329,21 @@ export default function Hero() {
               </span>
             </motion.button>
           </div>
-
           <p className="m-4 text-xs text-gray-400 tracking-wide">
             Runs locally · No data sent · Free
           </p>
         </motion.div>
 
-        {/* RIGHT */}
+        {/* RIGHT - Desktop floating cards */}
         <div className="hidden lg:block relative h-[560px]">
           {CARDS.map((card, i) => (
             <FloatingCard key={i} card={card} parallax={parallax} />
           ))}
         </div>
 
+        <div className="lg:hidden mt-16">
+          <MobileCardStack />
+        </div>
       </div>
     </section>
   )
